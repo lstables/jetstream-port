@@ -1,0 +1,58 @@
+{
+    "name": "laravelstream/laravelstream",
+    "description": "Jetstream-inspired features (Teams, API Tokens, Profile Management) for Laravel 12 starter kits.",
+    "keywords": ["laravel", "teams", "api-tokens", "profile", "two-factor", "sanctum", "inertia"],
+    "homepage": "https://github.com/laravelstream/laravelstream",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "LaravelStream Contributors",
+            "email": "hello@laravelstream.dev"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0",
+        "laravel/sanctum": "^4.0",
+        "pragmarx/google2fa": "^8.0",
+        "bacon/bacon-qr-code": "^3.0",
+        "intervention/image-laravel": "^1.0",
+        "symfony/http-foundation": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpstan/phpstan": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelStream\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelStream\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelStream\\LaravelStreamServiceProvider"
+            ],
+            "aliases": {
+                "LaravelStream": "LaravelStream\\Facades\\LaravelStream"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
