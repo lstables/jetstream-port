@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelStream\Actions\Teams;
+namespace TeamStream\Actions\Teams;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Gate;
-use LaravelStream\Contracts\RemovesTeamMembers;
+use TeamStream\Contracts\RemovesTeamMembers;
 
 class RemoveTeamMember implements RemovesTeamMembers
 {

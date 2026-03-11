@@ -1,13 +1,13 @@
 <?php
 
-namespace LaravelStream\Actions\Teams;
+namespace TeamStream\Actions\Teams;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use LaravelStream\Contracts\InvitesTeamMembers;
-use LaravelStream\Mail\TeamInvitation;
+use TeamStream\Contracts\InvitesTeamMembers;
+use TeamStream\Mail\TeamInvitation;
 
 class InviteTeamMember implements InvitesTeamMembers
 {
@@ -21,7 +21,7 @@ class InviteTeamMember implements InvitesTeamMembers
                 'email',
                 Rule::unique('team_invitations')->where(fn ($q) => $q->where('team_id', $team->id)),
             ],
-            'role' => ['nullable', 'string', Rule::in(array_keys(app(\LaravelStream\LaravelStream::class)->getRoles()))],
+            'role' => ['nullable', 'string', Rule::in(array_keys(app(\TeamStream\TeamStream::class)->getRoles()))],
         ], [
             'email.unique' => __('This user has already been invited to the team.'),
         ])->validateWithBag('addTeamMember');
@@ -32,7 +32,7 @@ class InviteTeamMember implements InvitesTeamMembers
             ])->errorBag('addTeamMember');
         }
 
-        $invitation = config('laravelstream.models.team_invitation')::create([
+        $invitation = config('TeamStream.models.team_invitation')::create([
             'team_id' => $team->id,
             'email' => $email,
             'role' => $role,

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Http\Controllers;
+namespace TeamStream\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -9,16 +9,16 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
-use LaravelStream\LaravelStream;
+use TeamStream\TeamStream;
 
 class ApiTokenController extends Controller
 {
     public function index(Request $request): Response
     {
-        return Inertia::render('LaravelStream/API/Index', [
+        return Inertia::render('TeamStream/API/Index', [
             'tokens' => $request->user()->tokens->map->only(['id', 'name', 'abilities', 'last_used_ago', 'created_at']),
-            'availablePermissions' => app(LaravelStream::class)->getPermissions(),
-            'defaultPermissions' => app(LaravelStream::class)->getDefaultPermissions(),
+            'availablePermissions' => app(TeamStream::class)->getPermissions(),
+            'defaultPermissions' => app(TeamStream::class)->getDefaultPermissions(),
         ]);
     }
 
@@ -27,12 +27,12 @@ class ApiTokenController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'permissions' => ['array'],
-            'permissions.*' => Rule::in(app(LaravelStream::class)->getPermissions()),
+            'permissions.*' => Rule::in(app(TeamStream::class)->getPermissions()),
         ]);
 
         $token = $request->user()->createToken(
             $request->name,
-            $request->permissions ?? app(LaravelStream::class)->getDefaultPermissions()
+            $request->permissions ?? app(TeamStream::class)->getDefaultPermissions()
         );
 
         return back()->with('flash', [
@@ -44,7 +44,7 @@ class ApiTokenController extends Controller
     {
         $request->validate([
             'permissions' => ['array'],
-            'permissions.*' => Rule::in(app(LaravelStream::class)->getPermissions()),
+            'permissions.*' => Rule::in(app(TeamStream::class)->getPermissions()),
         ]);
 
         $token = $request->user()->tokens()->where('id', $tokenId)->firstOrFail();

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Traits;
+namespace TeamStream\Traits;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -64,6 +64,6 @@ trait HasProfilePhoto
      */
     protected function profilePhotoDisk(): string
     {
-        return config('laravelstream.profile_photo_disk', 'public');
+        return config('teamstream.profile_photo_disk', 'public');
     }
 }

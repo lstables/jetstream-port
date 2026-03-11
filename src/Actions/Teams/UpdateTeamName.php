@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelStream\Actions\Teams;
+namespace TeamStream\Actions\Teams;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
-use LaravelStream\Contracts\UpdatesTeamNames;
+use TeamStream\Contracts\UpdatesTeamNames;
 
 class UpdateTeamName implements UpdatesTeamNames
 {

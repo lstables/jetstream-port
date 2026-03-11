@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelStream\Actions\Teams;
+namespace TeamStream\Actions\Teams;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use LaravelStream\Contracts\AddsTeamMembers;
+use TeamStream\Contracts\AddsTeamMembers;
 
 class AddTeamMember implements AddsTeamMembers
 {
@@ -13,11 +13,11 @@ class AddTeamMember implements AddsTeamMembers
     {
         Gate::forUser($user)->authorize('addTeamMember', $team);
 
-        $newMember = config('laravelstream.models.user')::where('email', $email)->firstOrFail();
+        $newMember = config('TeamStream.models.user')::where('email', $email)->firstOrFail();
 
         Validator::make(['email' => $email, 'role' => $role], [
             'email' => ['required', 'email', Rule::exists('users', 'email')],
-            'role' => ['nullable', 'string', Rule::in(array_keys(app(\LaravelStream\LaravelStream::class)->getRoles()))],
+            'role' => ['nullable', 'string', Rule::in(array_keys(app(\TeamStream\TeamStream::class)->getRoles()))],
         ])->validateWithBag('addTeamMember');
 
         if ($team->hasUser($newMember)) {

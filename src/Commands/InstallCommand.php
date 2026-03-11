@@ -1,6 +1,7 @@
 <?php
 
-namespace LaravelStream\Commands;
+namespace TeamStream\Commands;
+namespace TeamStream\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -9,7 +10,8 @@ use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command
 {
-    protected $signature = 'laravelstream:install
+    protected $signature = 'teamstream:install
+                                protected $signature = 'teamstream:install
                             {stack=vue : The frontend stack (vue or react)}
                             {--teams : Enable team management features}
                             {--api : Enable API token features}
@@ -18,7 +20,7 @@ class InstallCommand extends Command
                             {--no-deletion : Disable account deletion}
                             {--composer=global : Absolute path to the Composer binary}';
 
-    protected $description = 'Install the LaravelStream package into a Laravel 12 starter kit application';
+    protected $description = 'Install the TeamStream package into a Laravel 12 starter kit application';
 
     public function handle(): int
     {
@@ -29,27 +31,34 @@ class InstallCommand extends Command
             return self::FAILURE;
         }
 
-        $this->info("Installing LaravelStream for the [{$stack}] stack...");
+        $this->info("Installing TeamStream for the [{$stack}] stack...");
+    $this->info("Installing TeamStream for the [{$stack}] stack...");
 
         // Publish config
-        $this->callSilent('vendor:publish', ['--tag' => 'laravelstream-config', '--force' => true]);
+        $this->callSilent('vendor:publish', ['--tag' => 'TeamStream-config', '--force' => true]);
+            $this->callSilent('vendor:publish', ['--tag' => 'teamstream-config', '--force' => true]);
         $this->info('✓ Config published.');
 
         // Publish migrations
-        $this->callSilent('vendor:publish', ['--tag' => 'laravelstream-migrations', '--force' => true]);
+        $this->callSilent('vendor:publish', ['--tag' => 'TeamStream-migrations', '--force' => true]);
+            $this->callSilent('vendor:publish', ['--tag' => 'teamstream-migrations', '--force' => true]);
         $this->info('✓ Migrations published.');
 
         // Publish frontend stubs for the selected stack
-        $this->callSilent('vendor:publish', ['--tag' => "laravelstream-{$stack}", '--force' => true]);
+        $this->callSilent('vendor:publish', ['--tag' => "TeamStream-{$stack}", '--force' => true]);
+            $this->callSilent('vendor:publish', ['--tag' => "teamstream-{$stack}", '--force' => true]);
         $this->info("✓ {$stack} frontend components published.");
 
         // Publish routes
-        $this->callSilent('vendor:publish', ['--tag' => 'laravelstream-routes', '--force' => true]);
+        $this->callSilent('vendor:publish', ['--tag' => 'TeamStream-routes', '--force' => true]);
+            $this->callSilent('vendor:publish', ['--tag' => 'teamstream-routes', '--force' => true]);
         $this->info('✓ Routes published.');
 
         // Publish action stubs
-        $this->callSilent('vendor:publish', ['--tag' => 'laravelstream-actions', '--force' => true]);
-        $this->info('✓ Action classes published to app/Actions/LaravelStream.');
+        $this->callSilent('vendor:publish', ['--tag' => 'TeamStream-actions', '--force' => true]);
+            $this->callSilent('vendor:publish', ['--tag' => 'teamstream-actions', '--force' => true]);
+            $this->info('713 Action classes published to app/Actions/TeamStream.');
+        $this->info('✓ Action classes published to app/Actions/TeamStream.');
 
         // Publish and register the service provider
         $this->publishServiceProvider();
@@ -66,7 +75,7 @@ class InstallCommand extends Command
         $this->runMigrations();
 
         $this->newLine();
-        $this->components->info('LaravelStream installed successfully!');
+        $this->components->info('TeamStream installed successfully!');
         $this->showNextSteps($stack);
 
         return self::SUCCESS;
@@ -76,25 +85,25 @@ class InstallCommand extends Command
     {
         $fs = new Filesystem();
 
-        if (! $fs->exists(app_path('Providers/LaravelStreamServiceProvider.php'))) {
+        if (! $fs->exists(app_path('Providers/TeamStreamServiceProvider.php'))) {
             $stub = $this->getServiceProviderStub();
             $fs->ensureDirectoryExists(app_path('Providers'));
-            $fs->put(app_path('Providers/LaravelStreamServiceProvider.php'), $stub);
-            $this->info('✓ LaravelStreamServiceProvider created.');
+            $fs->put(app_path('Providers/TeamStreamServiceProvider.php'), $stub);
+            $this->info('✓ TeamStreamServiceProvider created.');
         }
 
         // Register it in bootstrap/providers.php (Laravel 11+)
         $providers = app_path('../bootstrap/providers.php');
         if (file_exists($providers)) {
             $content = file_get_contents($providers);
-            if (! str_contains($content, 'LaravelStreamServiceProvider')) {
+            if (! str_contains($content, 'TeamStreamServiceProvider')) {
                 $content = str_replace(
                     "return [",
-                    "return [\n    App\\Providers\\LaravelStreamServiceProvider::class,",
+                    "return [\n    App\\Providers\\TeamStreamServiceProvider::class,",
                     $content
                 );
                 file_put_contents($providers, $content);
-                $this->info('✓ LaravelStreamServiceProvider registered in bootstrap/providers.php.');
+                $this->info('✓ TeamStreamServiceProvider registered in bootstrap/providers.php.');
             }
         }
     }
@@ -107,28 +116,28 @@ class InstallCommand extends Command
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use LaravelStream\LaravelStream;
-use LaravelStream\Facades\LaravelStream as LaravelStreamFacade;
-use LaravelStream\Contracts\CreatesTeams;
-use LaravelStream\Contracts\UpdatesTeamNames;
-use LaravelStream\Contracts\AddsTeamMembers;
-use LaravelStream\Contracts\InvitesTeamMembers;
-use LaravelStream\Contracts\RemovesTeamMembers;
-use LaravelStream\Contracts\DeletesTeams;
-use LaravelStream\Contracts\UpdatesUserProfileInformation;
-use LaravelStream\Contracts\UpdatesUserPasswords;
-use LaravelStream\Contracts\DeletesUsers;
-use App\Actions\LaravelStream\CreateTeam;
-use App\Actions\LaravelStream\UpdateTeamName;
-use App\Actions\LaravelStream\AddTeamMember;
-use App\Actions\LaravelStream\InviteTeamMember;
-use App\Actions\LaravelStream\RemoveTeamMember;
-use App\Actions\LaravelStream\DeleteTeam;
-use App\Actions\LaravelStream\UpdateUserProfileInformation;
-use App\Actions\LaravelStream\UpdateUserPassword;
-use App\Actions\LaravelStream\DeleteUser;
+use TeamStream\TeamStream;
+use TeamStream\Facades\TeamStream as TeamStreamFacade;
+use TeamStream\Contracts\CreatesTeams;
+use TeamStream\Contracts\UpdatesTeamNames;
+use TeamStream\Contracts\AddsTeamMembers;
+use TeamStream\Contracts\InvitesTeamMembers;
+use TeamStream\Contracts\RemovesTeamMembers;
+use TeamStream\Contracts\DeletesTeams;
+use TeamStream\Contracts\UpdatesUserProfileInformation;
+use TeamStream\Contracts\UpdatesUserPasswords;
+use TeamStream\Contracts\DeletesUsers;
+use App\Actions\TeamStream\CreateTeam;
+use App\Actions\TeamStream\UpdateTeamName;
+use App\Actions\TeamStream\AddTeamMember;
+use App\Actions\TeamStream\InviteTeamMember;
+use App\Actions\TeamStream\RemoveTeamMember;
+use App\Actions\TeamStream\DeleteTeam;
+use App\Actions\TeamStream\UpdateUserProfileInformation;
+use App\Actions\TeamStream\UpdateUserPassword;
+use App\Actions\TeamStream\DeleteUser;
 
-class LaravelStreamServiceProvider extends ServiceProvider
+class TeamStreamServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
@@ -145,7 +154,7 @@ class LaravelStreamServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->app->make(LaravelStream::class)
+        $this->app->make(TeamStream::class)
             ->permissions(['read', 'create', 'update', 'delete'])
             ->defaultApiTokenPermissions(['read'])
             ->role('admin', 'Administrator', ['*'], 'Full access to all team resources')
@@ -167,9 +176,9 @@ PHP;
         $content = file_get_contents($userModel);
 
         $traits = [
-            'LaravelStream\\Traits\\HasTeams',
-            'LaravelStream\\Traits\\HasProfilePhoto',
-            'LaravelStream\\Traits\\TwoFactorAuthenticatable',
+            'TeamStream\\Traits\\HasTeams',
+            'TeamStream\\Traits\\HasProfilePhoto',
+            'TeamStream\\Traits\\TwoFactorAuthenticatable',
             'Laravel\\Sanctum\\HasApiTokens',
         ];
 
@@ -185,16 +194,16 @@ PHP;
         }
 
         if ($useStatements) {
-            $content = str_replace("use Illuminate\\Foundation\\Auth\\User as Authenticatable;", 
+            $content = str_replace("use Illuminate\\Foundation\\Auth\\User as Authenticatable;",
                 "use Illuminate\\Foundation\\Auth\\User as Authenticatable;\n{$useStatements}",
                 $content);
-            
-            $content = preg_replace('/use HasFactory, Notifiable;/', 
-                "use HasFactory, Notifiable;\n{$traitUses}", 
+
+            $content = preg_replace('/use HasFactory, Notifiable;/',
+                "use HasFactory, Notifiable;\n{$traitUses}",
                 $content, 1);
 
             file_put_contents($userModel, $content);
-            $this->info('✓ User model updated with LaravelStream traits.');
+            $this->info('✓ User model updated with TeamStream traits.');
         }
     }
 
@@ -203,9 +212,9 @@ PHP;
         $webRoutes = base_path('routes/web.php');
         if (file_exists($webRoutes)) {
             $content = file_get_contents($webRoutes);
-            if (! str_contains($content, 'laravelstream.php')) {
-                file_put_contents($webRoutes, $content . "\n\nrequire __DIR__.'/laravelstream.php';\n");
-                $this->info('✓ LaravelStream routes registered in routes/web.php.');
+            if (! str_contains($content, 'TeamStream.php')) {
+                file_put_contents($webRoutes, $content . "\n\nrequire __DIR__.'/TeamStream.php';\n");
+                $this->info('✓ TeamStream routes registered in routes/web.php.');
             }
         }
     }
@@ -226,9 +235,9 @@ PHP;
     protected function showNextSteps(string $stack): void
     {
         $this->components->info('Next steps:');
-        $this->line('  1. Review <comment>config/laravelstream.php</comment> and enable/disable features.');
-        $this->line('  2. Customise actions in <comment>app/Actions/LaravelStream/</comment>.');
-        $this->line('  3. Register roles/permissions in <comment>app/Providers/LaravelStreamServiceProvider.php</comment>.');
+        $this->line('  1. Review <comment>config/TeamStream.php</comment> and enable/disable features.');
+        $this->line('  2. Customise actions in <comment>app/Actions/TeamStream/</comment>.');
+        $this->line('  3. Register roles/permissions in <comment>app/Providers/TeamStreamServiceProvider.php</comment>.');
         if ($stack === 'vue') {
             $this->line('  4. Run <comment>npm install && npm run dev</comment>.');
         } else {

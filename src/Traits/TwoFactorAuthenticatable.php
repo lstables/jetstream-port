@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Traits;
+namespace TeamStream\Traits;
 
 use BaconQrCode\Renderer\Color\Rgb;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;

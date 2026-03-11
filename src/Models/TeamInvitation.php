@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Models;
+namespace TeamStream\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +11,6 @@ class TeamInvitation extends Model
 
     public function team(): BelongsTo
     {
-        return $this->belongsTo(config('laravelstream.models.team'));
+        return $this->belongsTo(config('teamstream.models.team'));
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelStream\Traits;
+namespace TeamStream\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use LaravelStream\LaravelStream;
+use TeamStream\TeamStream;
 
 trait HasTeams
 {
@@ -14,7 +14,7 @@ trait HasTeams
      */
     public function ownedTeams(): HasMany
     {
-        return $this->hasMany(config('laravelstream.models.team'));
+        return $this->hasMany(config('teamstream.models.team'));
     }
 
     /**
@@ -23,7 +23,7 @@ trait HasTeams
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(
-            config('laravelstream.models.team'),
+            config('teamstream.models.team'),
             'team_user',
             'user_id',
             'team_id'
@@ -39,7 +39,7 @@ trait HasTeams
             $this->switchTeam($this->personalTeam());
         }
 
-        return $this->belongsTo(config('laravelstream.models.team'), 'current_team_id')->first();
+        return $this->belongsTo(config('teamstream.models.team'), 'current_team_id')->first();
     }
 
     /**
@@ -115,7 +115,7 @@ trait HasTeams
             return null;
         }
 
-        return app(LaravelStream::class)->findRole($membership->role);
+        return app(TeamStream::class)->findRole($membership->role);
     }
 
     /**
@@ -128,7 +128,7 @@ trait HasTeams
         }
 
         return $this->belongsToTeam($team) && optional(
-            app(LaravelStream::class)->findRole(
+            app(TeamStream::class)->findRole(
                 $this->teams->where('id', $team->id)->first()?->membership?->role ?? ''
             )
         )['key'] === $role;

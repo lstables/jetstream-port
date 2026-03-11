@@ -1,10 +1,10 @@
 <?php
 
-namespace LaravelStream\Actions\Auth;
+namespace TeamStream\Actions\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use LaravelStream\Contracts\UpdatesUserPasswords;
+use TeamStream\Contracts\UpdatesUserPasswords;
 
 class UpdateUserPassword implements UpdatesUserPasswords
 {

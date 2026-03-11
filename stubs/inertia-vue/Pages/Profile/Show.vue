@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/app-layout'
-import UpdateProfileInformationForm from '@/components/LaravelStream/Profile/UpdateProfileInformationForm.vue'
-import UpdatePasswordForm from '@/components/LaravelStream/Profile/UpdatePasswordForm.vue'
-import TwoFactorAuthenticationForm from '@/components/LaravelStream/Profile/TwoFactorAuthenticationForm.vue'
-import DeleteUserForm from '@/components/LaravelStream/Profile/DeleteUserForm.vue'
+import UpdateProfileInformationForm from '@/components/TeamStream/Profile/UpdateProfileInformationForm.vue'
+import UpdatePasswordForm from '@/components/TeamStream/Profile/UpdatePasswordForm.vue'
+import TwoFactorAuthenticationForm from '@/components/TeamStream/Profile/TwoFactorAuthenticationForm.vue'
+import DeleteUserForm from '@/components/TeamStream/Profile/DeleteUserForm.vue'
 
 defineProps<{
   sessions: object[]

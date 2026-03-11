@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelStream\Actions\Teams;
+namespace TeamStream\Actions\Teams;
 
-use LaravelStream\Contracts\DeletesTeams;
+use TeamStream\Contracts\DeletesTeams;
 
 class DeleteTeam implements DeletesTeams
 {

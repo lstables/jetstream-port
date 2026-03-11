@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream;
+namespace TeamStream;
 
 enum Feature: string
 {

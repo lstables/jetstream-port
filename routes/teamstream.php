@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use LaravelStream\Http\Controllers\ApiTokenController;
-use LaravelStream\Http\Controllers\ProfileController;
-use LaravelStream\Http\Controllers\TeamController;
-use LaravelStream\Http\Controllers\TwoFactorAuthenticationController;
-use LaravelStream\LaravelStream;
+use TeamStream\Http\Controllers\ApiTokenController;
+use TeamStream\Http\Controllers\ProfileController;
+use TeamStream\Http\Controllers\TeamController;
+use TeamStream\Http\Controllers\TwoFactorAuthenticationController;
+use TeamStream\TeamStream;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +17,11 @@ Route::group([], function () {
     Route::put('/user/profile-information', [ProfileController::class, 'update'])->name('user-profile-information.update');
     Route::put('/user/password', [ProfileController::class, 'updatePassword'])->name('user-password.update');
 
-    if (LaravelStream::hasProfilePhotoFeature()) {
+    if (TeamStream::hasProfilePhotoFeature()) {
         Route::delete('/user/profile-photo', [ProfileController::class, 'destroyPhoto'])->name('current-user-photo.destroy');
     }
 
-    if (LaravelStream::hasAccountDeletionFeature()) {
+    if (TeamStream::hasAccountDeletionFeature()) {
         Route::delete('/user', [ProfileController::class, 'destroy'])->name('current-user.destroy');
     }
 });
@@ -31,7 +31,7 @@ Route::group([], function () {
 | Two Factor Authentication Routes
 |--------------------------------------------------------------------------
 */
-if (LaravelStream::hasTwoFactorAuthenticationFeature()) {
+if (TeamStream::hasTwoFactorAuthenticationFeature()) {
     Route::group([], function () {
         Route::post('/user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])->name('two-factor.enable');
         Route::post('/user/confirmed-two-factor-authentication', [TwoFactorAuthenticationController::class, 'confirm'])->name('two-factor.confirm');
@@ -46,7 +46,7 @@ if (LaravelStream::hasTwoFactorAuthenticationFeature()) {
 | API Token Routes
 |--------------------------------------------------------------------------
 */
-if (LaravelStream::hasApiFeatures()) {
+if (TeamStream::hasApiFeatures()) {
     Route::group([], function () {
         Route::get('/user/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
         Route::post('/user/api-tokens', [ApiTokenController::class, 'store'])->name('api-tokens.store');
@@ -60,7 +60,7 @@ if (LaravelStream::hasApiFeatures()) {
 | Team Routes
 |--------------------------------------------------------------------------
 */
-if (LaravelStream::hasTeamFeatures()) {
+if (TeamStream::hasTeamFeatures()) {
     Route::group([], function () {
         Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
         Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
@@ -77,7 +77,7 @@ if (LaravelStream::hasTeamFeatures()) {
         Route::put('/current-team', [TeamController::class, 'switchTeam'])->name('current-team.update');
 
         // Invitations
-        if (LaravelStream::hasTeamInvitations()) {
+        if (TeamStream::hasTeamInvitations()) {
             Route::delete('/team-invitations/{invitation}', [TeamController::class, 'cancelInvitation'])->name('team-invitations.destroy');
             Route::get('/team-invitations/{token}/accept', [TeamController::class, 'acceptInvitation'])->name('team-invitations.accept');
         }

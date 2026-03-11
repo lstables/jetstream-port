@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react'
 import AppLayout from '@/layouts/app-layout'
-import CreateApiTokenForm from '@/components/LaravelStream/API/CreateApiTokenForm'
-import ApiTokenList from '@/components/LaravelStream/API/ApiTokenList'
+import CreateApiTokenForm from '@/components/TeamStream/API/CreateApiTokenForm'
+import ApiTokenList from '@/components/TeamStream/API/ApiTokenList'
 
 interface Token {
   id: number

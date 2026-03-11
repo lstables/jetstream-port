@@ -1,8 +1,8 @@
 <?php
 
-namespace LaravelStream;
+namespace TeamStream;
 
-class LaravelStream
+class TeamStream
 {
     /** @var array<string, array{name: string, key: string, description: string}> */
     protected array $roles = [];
@@ -21,37 +21,37 @@ class LaravelStream
      */
     public static function hasTeamFeatures(): bool
     {
-        return in_array(Feature::Teams, config('laravelstream.features', []));
+        return in_array(Feature::Teams, config('teamstream.features', []));
     }
 
     public static function hasApiFeatures(): bool
     {
-        return in_array(Feature::Api, config('laravelstream.features', []));
+        return in_array(Feature::Api, config('teamstream.features', []));
     }
 
     public static function hasProfilePhotoFeature(): bool
     {
-        return in_array(Feature::ProfilePhotos, config('laravelstream.features', []));
+        return in_array(Feature::ProfilePhotos, config('teamstream.features', []));
     }
 
     public static function hasAccountDeletionFeature(): bool
     {
-        return in_array(Feature::AccountDeletion, config('laravelstream.features', []));
+        return in_array(Feature::AccountDeletion, config('teamstream.features', []));
     }
 
     public static function hasTwoFactorAuthenticationFeature(): bool
     {
-        return in_array(Feature::TwoFactorAuthentication, config('laravelstream.features', []));
+        return in_array(Feature::TwoFactorAuthentication, config('teamstream.features', []));
     }
 
     public static function hasEmailVerification(): bool
     {
-        return in_array(Feature::EmailVerification, config('laravelstream.features', []));
+        return in_array(Feature::EmailVerification, config('teamstream.features', []));
     }
 
     public static function hasTeamInvitations(): bool
     {
-        return in_array(Feature::TeamInvitations, config('laravelstream.features', []));
+        return in_array(Feature::TeamInvitations, config('teamstream.features', []));
     }
 
     /**

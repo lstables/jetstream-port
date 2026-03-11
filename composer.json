@@ -1,14 +1,14 @@
 {
-    "name": "laravelstream/laravelstream",
+    "name": "teamstream/teamstream",
     "description": "Jetstream-inspired features (Teams, API Tokens, Profile Management) for Laravel 12 starter kits.",
     "keywords": ["laravel", "teams", "api-tokens", "profile", "two-factor", "sanctum", "inertia"],
-    "homepage": "https://github.com/laravelstream/laravelstream",
+    "homepage": "https://github.com/teamstream/teamstream",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
-            "name": "LaravelStream Contributors",
-            "email": "hello@laravelstream.dev"
+            "name": "TeamStream Contributors",
+            "email": "hello@teamstream.dev"
         }
     ],
     "require": {
@@ -29,21 +29,21 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelStream\\": "src/"
+            "TeamStream\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelStream\\Tests\\": "tests/"
+            "TeamStream\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LaravelStream\\LaravelStreamServiceProvider"
+                "TeamStream\\TeamStreamServiceProvider"
             ],
             "aliases": {
-                "LaravelStream": "LaravelStream\\Facades\\LaravelStream"
+                "TeamStream": "TeamStream\\Facades\\TeamStream"
             }
         }
     },

@@ -1,9 +1,9 @@
 import { Head } from '@inertiajs/react'
 import AppLayout from '@/layouts/app-layout'
-import UpdateProfileInformationForm from '@/components/LaravelStream/Profile/UpdateProfileInformationForm'
-import UpdatePasswordForm from '@/components/LaravelStream/Profile/UpdatePasswordForm'
-import TwoFactorAuthenticationForm from '@/components/LaravelStream/Profile/TwoFactorAuthenticationForm'
-import DeleteUserForm from '@/components/LaravelStream/Profile/DeleteUserForm'
+import UpdateProfileInformationForm from '@/components/TeamStream/Profile/UpdateProfileInformationForm'
+import UpdatePasswordForm from '@/components/TeamStream/Profile/UpdatePasswordForm'
+import TwoFactorAuthenticationForm from '@/components/TeamStream/Profile/TwoFactorAuthenticationForm'
+import DeleteUserForm from '@/components/TeamStream/Profile/DeleteUserForm'
 
 interface Props {
   sessions: object[]

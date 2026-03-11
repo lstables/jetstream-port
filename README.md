@@ -1,9 +1,9 @@
-# LaravelStream
+# TeamStream
 
-**LaravelStream** is a Jetstream-inspired feature package for **Laravel 11/12** with the new starter kits (Vue + Inertia 2, React + Inertia 2, TypeScript, shadcn/ui). It ports Jetstream's most-loved features — Team Management, API Tokens, Profile Management, and Two-Factor Authentication — without requiring you to swap your starter kit.
+**TeamStream** is a Jetstream-inspired feature package for **Laravel 11/12** with the new starter kits (Vue + Inertia 2, React + Inertia 2, TypeScript, shadcn/ui). It ports Jetstream's most-loved features — Team Management, API Tokens, Profile Management, and Two-Factor Authentication — without requiring you to swap your starter kit.
 
-> **Why LaravelStream?**
-> Laravel 12 officially deprecated Jetstream in favour of new starter kits, but those kits ship without teams, API tokens, or 2FA. LaravelStream fills that gap as a drop-in composer package.
+> **Why TeamStream?**
+> Laravel 12 officially deprecated Jetstream in favour of new starter kits, but those kits ship without teams, API tokens, or 2FA. TeamStream fills that gap as a drop-in composer package.
 
 ---
 
@@ -34,19 +34,19 @@
 ## Installation
 
 ```bash
-composer require laravelstream/laravelstream
+composer require teamstream/teamstream
 ```
 
 ### Install for Vue (default)
 
 ```bash
-php artisan laravelstream:install vue --teams --api --2fa --photos
+php artisan teamstream:install vue --teams --api --2fa --photos
 ```
 
 ### Install for React
 
 ```bash
-php artisan laravelstream:install react --teams --api --2fa --photos
+php artisan teamstream:install react --teams --api --2fa --photos
 ```
 
 ### Flags
@@ -61,12 +61,12 @@ php artisan laravelstream:install react --teams --api --2fa --photos
 
 The installer will:
 
-1. Publish the config file to `config/laravelstream.php`
+1. Publish the config file to `config/teamstream.php`
 2. Publish database migrations
 3. Publish Vue or React UI components into `resources/js/`
-4. Publish the route file to `routes/laravelstream.php`
-5. Publish customisable action classes to `app/Actions/LaravelStream/`
-6. Create and register `app/Providers/LaravelStreamServiceProvider.php`
+4. Publish the route file to `routes/teamstream.php`
+5. Publish customisable action classes to `app/Actions/TeamStream/`
+6. Create and register `app/Providers/TeamStreamServiceProvider.php`
 7. Update your `App\Models\User` with the required traits
 8. Optionally run migrations
 
@@ -74,10 +74,10 @@ The installer will:
 
 ## Configuration
 
-After installing, your `config/laravelstream.php` controls which features are active:
+After installing, your `config/teamstream.php` controls which features are active:
 
 ```php
-use LaravelStream\Feature;
+use TeamStream\Feature;
 
 return [
     'stack' => 'vue', // or 'react'
@@ -92,7 +92,7 @@ return [
         Feature::TeamInvitations,
     ],
 
-    'profile_photo_disk' => env('LARAVELSTREAM_PHOTO_DISK', 'public'),
+    'profile_photo_disk' => env('TEAMSTREAM_PHOTO_DISK', 'public'),
 ];
 ```
 
@@ -105,9 +105,9 @@ Simply remove a `Feature` from the array to disable it — no routes, no UI, no 
 The installer adds these traits to your `App\Models\User`:
 
 ```php
-use LaravelStream\Traits\HasTeams;
-use LaravelStream\Traits\HasProfilePhoto;
-use LaravelStream\Traits\TwoFactorAuthenticatable;
+use TeamStream\Traits\HasTeams;
+use TeamStream\Traits\HasProfilePhoto;
+use TeamStream\Traits\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -122,10 +122,10 @@ If you don't use all features, you can omit the corresponding traits.
 
 ## Customising Actions
 
-All business logic lives in published action classes at `app/Actions/LaravelStream/`. These are bound to contracts in your `LaravelStreamServiceProvider`, making them trivial to swap:
+All business logic lives in published action classes at `app/Actions/TeamStream/`. These are bound to contracts in your `TeamStreamServiceProvider`, making them trivial to swap:
 
 ```
-app/Actions/LaravelStream/
+app/Actions/TeamStream/
 ├── CreateTeam.php
 ├── UpdateTeamName.php
 ├── AddTeamMember.php
@@ -140,7 +140,7 @@ app/Actions/LaravelStream/
 Example — restrict team creation to users on a paid plan:
 
 ```php
-// app/Actions/LaravelStream/CreateTeam.php
+// app/Actions/TeamStream/CreateTeam.php
 
 public function create(mixed $user, array $input): mixed
 {
@@ -156,12 +156,12 @@ public function create(mixed $user, array $input): mixed
 
 ## Defining Roles & Permissions
 
-In your published `app/Providers/LaravelStreamServiceProvider.php`:
+In your published `app/Providers/TeamStreamServiceProvider.php`:
 
 ```php
 public function boot(): void
 {
-    $this->app->make(LaravelStream::class)
+    $this->app->make(TeamStream::class)
         ->permissions(['read', 'create', 'update', 'delete'])
         ->defaultApiTokenPermissions(['read'])
         ->role('admin', 'Administrator', ['*'], 'Full access to all team resources')
@@ -183,7 +183,7 @@ $user->teamRole($team);                      // ['key' => 'editor', 'name' => 'E
 
 ## Routes
 
-All routes are in the published `routes/laravelstream.php`. They are automatically required from `routes/web.php` and protected by `['web', 'auth']` middleware.
+All routes are in the published `routes/TeamStream.php`. They are automatically required from `routes/web.php` and protected by `['web', 'auth']` middleware.
 
 | Method | URI | Name |
 |---|---|---|
@@ -212,17 +212,17 @@ All routes are in the published `routes/laravelstream.php`. They are automatical
 
 ## Frontend Components
 
-After install, components are published into `resources/js/components/LaravelStream/` and pages into `resources/js/Pages/LaravelStream/`.
+After install, components are published into `resources/js/components/TeamStream/` and pages into `resources/js/Pages/TeamStream/`.
 
 ### Vue (shadcn-vue)
 
 ```
 resources/js/
-├── Pages/LaravelStream/
+├── Pages/TeamStream/
 │   ├── Profile/Show.vue
 │   ├── API/Index.vue
 │   └── Teams/Show.vue, Create.vue
-└── components/LaravelStream/
+└── components/TeamStream/
     ├── Profile/
     │   ├── UpdateProfileInformationForm.vue
     │   ├── UpdatePasswordForm.vue
@@ -296,15 +296,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 ## Upgrading from Jetstream
 
-| Jetstream | LaravelStream |
+| Jetstream | TeamStream |
 |---|---|
-| `Laravel\Jetstream\HasTeams` | `LaravelStream\Traits\HasTeams` |
-| `Laravel\Jetstream\HasProfilePhoto` | `LaravelStream\Traits\HasProfilePhoto` |
-| `Laravel\Jetstream\TwoFactorAuthenticatable` | `LaravelStream\Traits\TwoFactorAuthenticatable` |
-| `Jetstream::role(...)` | `LaravelStream::role(...)` |
-| `Jetstream::permissions(...)` | `LaravelStream::permissions(...)` |
-| `Jetstream::hasTeamFeatures()` | `LaravelStream::hasTeamFeatures()` |
-| `app/Actions/Jetstream/` | `app/Actions/LaravelStream/` |
+| `Laravel\Jetstream\HasTeams` | `TeamStream\Traits\HasTeams` |
+| `Laravel\Jetstream\HasProfilePhoto` | `TeamStream\Traits\HasProfilePhoto` |
+| `Laravel\Jetstream\TwoFactorAuthenticatable` | `TeamStream\Traits\TwoFactorAuthenticatable` |
+| `Jetstream::role(...)` | `TeamStream::role(...)` |
+| `Jetstream::permissions(...)` | `TeamStream::permissions(...)` |
+| `Jetstream::hasTeamFeatures()` | `TeamStream::hasTeamFeatures()` |
+| `app/Actions/Jetstream/` | `app/Actions/TeamStream/` |
 
 ---
 

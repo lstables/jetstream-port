@@ -1,8 +1,8 @@
 import { Head } from '@inertiajs/react'
 import AppLayout from '@/layouts/app-layout'
-import TeamNameForm from '@/components/LaravelStream/Teams/TeamNameForm'
-import TeamMemberManager from '@/components/LaravelStream/Teams/TeamMemberManager'
-import DeleteTeamForm from '@/components/LaravelStream/Teams/DeleteTeamForm'
+import TeamNameForm from '@/components/TeamStream/Teams/TeamNameForm'
+import TeamMemberManager from '@/components/TeamStream/Teams/TeamMemberManager'
+import DeleteTeamForm from '@/components/TeamStream/Teams/DeleteTeamForm'
 
 interface Member {
   id: number; name: string; email: string

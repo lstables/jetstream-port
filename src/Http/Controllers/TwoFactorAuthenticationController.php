@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Http\Controllers;
+namespace TeamStream\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class TwoFactorAuthenticationController extends Controller
         $valid = $this->google2fa->verifyKey(
             decrypt($user->two_factor_secret),
             $request->code,
-            config('laravelstream.two_factor.window', 1)
+            config('TeamStream.two_factor.window', 1)
         );
 
         if (! $valid) {

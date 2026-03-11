@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Models;
+namespace TeamStream\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,7 +21,7 @@ class Team extends Model
      */
     public function owner(): BelongsTo
     {
-        return $this->belongsTo(config('laravelstream.models.user'), 'user_id');
+        return $this->belongsTo(config('teamstream.models.user'), 'user_id');
     }
 
     /**
@@ -38,7 +38,7 @@ class Team extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(
-            config('laravelstream.models.user'),
+            config('teamstream.models.user'),
             'team_user',
             'team_id',
             'user_id'
@@ -50,7 +50,7 @@ class Team extends Model
      */
     public function teamInvitations(): HasMany
     {
-        return $this->hasMany(config('laravelstream.models.team_invitation'));
+        return $this->hasMany(config('teamstream.models.team_invitation'));
     }
 
     /**

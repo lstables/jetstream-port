@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Policies;
+namespace TeamStream\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 

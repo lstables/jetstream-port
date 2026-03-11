@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/app-layout'
-import TeamNameForm from '@/components/LaravelStream/Teams/TeamNameForm.vue'
-import TeamMemberManager from '@/components/LaravelStream/Teams/TeamMemberManager.vue'
-import DeleteTeamForm from '@/components/LaravelStream/Teams/DeleteTeamForm.vue'
+import TeamNameForm from '@/components/TeamStream/Teams/TeamNameForm.vue'
+import TeamMemberManager from '@/components/TeamStream/Teams/TeamMemberManager.vue'
+import DeleteTeamForm from '@/components/TeamStream/Teams/DeleteTeamForm.vue'
 
 interface TeamMember {
   id: number

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Contracts;
+namespace TeamStream\Contracts;
 
 interface UpdatesUserPasswords
 {

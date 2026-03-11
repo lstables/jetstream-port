@@ -1,29 +1,29 @@
 <?php
 
-namespace LaravelStream\Http\Controllers;
+namespace TeamStream\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
-use LaravelStream\Contracts\DeletesUsers;
-use LaravelStream\Contracts\UpdatesUserPasswords;
-use LaravelStream\Contracts\UpdatesUserProfileInformation;
-use LaravelStream\LaravelStream;
+use TeamStream\Contracts\DeletesUsers;
+use TeamStream\Contracts\UpdatesUserPasswords;
+use TeamStream\Contracts\UpdatesUserProfileInformation;
+use TeamStream\TeamStream;
 
 class ProfileController extends Controller
 {
     public function show(Request $request): Response
     {
-        $stack = config('laravelstream.stack', 'vue');
-        $component = $stack === 'react' ? 'LaravelStream/Profile/Show' : 'LaravelStream/Profile/Show';
+        $stack = config('TeamStream.stack', 'vue');
+        $component = $stack === 'react' ? 'TeamStream/Profile/Show' : 'TeamStream/Profile/Show';
 
         return Inertia::render($component, [
             'sessions' => $this->sessions($request),
-            'hasProfilePhoto' => LaravelStream::hasProfilePhotoFeature(),
-            'hasTwoFactor' => LaravelStream::hasTwoFactorAuthenticationFeature(),
-            'hasAccountDeletion' => LaravelStream::hasAccountDeletionFeature(),
+            'hasProfilePhoto' => TeamStream::hasProfilePhotoFeature(),
+            'hasTwoFactor' => TeamStream::hasTwoFactorAuthenticationFeature(),
+            'hasAccountDeletion' => TeamStream::hasAccountDeletionFeature(),
             'twoFactorEnabled' => $request->user()->hasEnabledTwoFactorAuthentication(),
             'twoFactorPending' => $request->user()->hasPendingTwoFactorAuthentication(),
         ]);

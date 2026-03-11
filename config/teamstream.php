@@ -1,27 +1,27 @@
 <?php
 
-use LaravelStream\Feature;
+use TeamStream\Feature;
 
 return [
 
     /*
     |--------------------------------------------------------------------------
-    | LaravelStream Stack
+    | TeamStream Stack
     |--------------------------------------------------------------------------
     |
-    | This configuration value informs LaravelStream which "stack" you will
+    | This configuration value informs TeamStream which "stack" you will
     | be using with your Inertia application. Supported: "vue", "react".
     |
     */
 
-    'stack' => env('LARAVELSTREAM_STACK', 'vue'),
+    'stack' => env('TEAMSTREAM_STACK', 'vue'),
 
     /*
     |--------------------------------------------------------------------------
     | Features
     |--------------------------------------------------------------------------
     |
-    | Some of LaravelStream's features are optional. You may disable them here.
+    | Some of TeamStream's features are optional. You may disable them here.
     | Simply remove the feature from the array to disable it.
     |
     */
@@ -46,14 +46,14 @@ return [
     |
     */
 
-    'profile_photo_disk' => env('LARAVELSTREAM_PHOTO_DISK', 'public'),
+    'profile_photo_disk' => env('TEAMSTREAM_PHOTO_DISK', 'public'),
 
     /*
     |--------------------------------------------------------------------------
     | Route Middleware
     |--------------------------------------------------------------------------
     |
-    | Middleware to apply to all LaravelStream routes.
+    | Middleware to apply to all TeamStream routes.
     |
     */
 
@@ -72,8 +72,8 @@ return [
     'models' => [
         'team' => App\Models\Team::class,
         'user' => App\Models\User::class,
-        'membership' => LaravelStream\Models\Membership::class,
-        'team_invitation' => LaravelStream\Models\TeamInvitation::class,
+        'membership' => TeamStream\Models\Membership::class,
+        'team_invitation' => TeamStream\Models\TeamInvitation::class,
     ],
 
     /*
@@ -95,7 +95,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define all possible permissions for your API tokens here. These are
-    | configured in your app's LaravelStreamServiceProvider (published on install).
+    | configured in your app's TeamStreamServiceProvider (published on install).
     |
     */
 

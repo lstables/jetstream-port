@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Mail;
+namespace TeamStream\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -32,7 +32,7 @@ class TeamInvitation extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'laravelstream::mail.team-invitation',
+            markdown: 'teamstream::mail.team-invitation',
             with: [
                 'acceptUrl' => url(route('team-invitations.accept', ['token' => $this->invitation->token])),
                 'teamName' => $this->invitation->team->name,

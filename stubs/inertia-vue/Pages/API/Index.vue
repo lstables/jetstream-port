@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/app-layout'
-import CreateApiTokenForm from '@/components/LaravelStream/API/CreateApiTokenForm.vue'
-import ApiTokenList from '@/components/LaravelStream/API/ApiTokenList.vue'
+import CreateApiTokenForm from '@/components/TeamStream/API/CreateApiTokenForm.vue'
+import ApiTokenList from '@/components/TeamStream/API/ApiTokenList.vue'
 
 defineProps<{
   tokens: Array<{

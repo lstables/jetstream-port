@@ -1,11 +1,11 @@
 <?php
 
-namespace LaravelStream\Actions\Auth;
+namespace TeamStream\Actions\Auth;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use LaravelStream\Contracts\UpdatesUserProfileInformation;
-use LaravelStream\LaravelStream;
+use TeamStream\Contracts\UpdatesUserProfileInformation;
+use TeamStream\TeamStream;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -14,12 +14,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'photo' => LaravelStream::hasProfilePhotoFeature()
+            'photo' => TeamStream::hasProfilePhotoFeature()
                 ? ['nullable', 'mimes:jpg,jpeg,png', 'max:1024']
                 : [],
         ])->validateWithBag('updateProfileInformation');
 
-        if (isset($input['photo']) && LaravelStream::hasProfilePhotoFeature()) {
+        if (isset($input['photo']) && TeamStream::hasProfilePhotoFeature()) {
             $user->updateProfilePhoto($input['photo']);
         }
 

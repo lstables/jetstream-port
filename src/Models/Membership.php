@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelStream\Models;
+namespace TeamStream\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 

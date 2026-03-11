@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelStream\Actions\Auth;
+namespace TeamStream\Actions\Auth;
 
-use LaravelStream\Contracts\DeletesTeams;
-use LaravelStream\Contracts\DeletesUsers;
+use TeamStream\Contracts\DeletesTeams;
+use TeamStream\Contracts\DeletesUsers;
 
 class DeleteUser implements DeletesUsers
 {

@@ -1,25 +1,25 @@
 <?php
 
-namespace LaravelStream\Http\Controllers;
+namespace TeamStream\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
-use LaravelStream\Contracts\AddsTeamMembers;
-use LaravelStream\Contracts\CreatesTeams;
-use LaravelStream\Contracts\DeletesTeams;
-use LaravelStream\Contracts\InvitesTeamMembers;
-use LaravelStream\Contracts\RemovesTeamMembers;
-use LaravelStream\Contracts\UpdatesTeamNames;
-use LaravelStream\LaravelStream;
+use TeamStream\Contracts\AddsTeamMembers;
+use TeamStream\Contracts\CreatesTeams;
+use TeamStream\Contracts\DeletesTeams;
+use TeamStream\Contracts\InvitesTeamMembers;
+use TeamStream\Contracts\RemovesTeamMembers;
+use TeamStream\Contracts\UpdatesTeamNames;
+use TeamStream\TeamStream;
 
 class TeamController extends Controller
 {
     public function index(Request $request): Response
     {
-        return Inertia::render('LaravelStream/Teams/Index', [
+        return Inertia::render('TeamStream/Teams/Index', [
             'teams' => $request->user()->allTeams()->map->only(['id', 'name', 'personal_team']),
             'currentTeam' => $request->user()->currentTeam(),
         ]);
@@ -27,7 +27,7 @@ class TeamController extends Controller
 
     public function create(Request $request): Response
     {
-        return Inertia::render('LaravelStream/Teams/Create');
+        return Inertia::render('TeamStream/Teams/Create');
     }
 
     public function store(Request $request, CreatesTeams $creator): RedirectResponse
@@ -39,13 +39,13 @@ class TeamController extends Controller
 
     public function show(Request $request, mixed $team): Response
     {
-        $teamModel = config('laravelstream.models.team')::findOrFail($team);
+        $teamModel = config('TeamStream.models.team')::findOrFail($team);
 
         $this->authorize('view', $teamModel);
 
-        return Inertia::render('LaravelStream/Teams/Show', [
+        return Inertia::render('TeamStream/Teams/Show', [
             'team' => $teamModel->load('owner', 'users'),
-            'availableRoles' => array_values(app(LaravelStream::class)->getRoles()),
+            'availableRoles' => array_values(app(TeamStream::class)->getRoles()),
             'userPermissions' => [
                 'canAddTeamMembers' => $request->user()->can('addTeamMember', $teamModel),
                 'canDeleteTeam' => $request->user()->can('delete', $teamModel),
@@ -57,7 +57,7 @@ class TeamController extends Controller
 
     public function update(Request $request, mixed $team, UpdatesTeamNames $updater): RedirectResponse
     {
-        $teamModel = config('laravelstream.models.team')::findOrFail($team);
+        $teamModel = config('TeamStream.models.team')::findOrFail($team);
         $updater->update($teamModel, $request->all());
 
         return back()->with('status', 'team-updated');
@@ -65,7 +65,7 @@ class TeamController extends Controller
 
     public function destroy(Request $request, mixed $team, DeletesTeams $deleter): RedirectResponse
     {
-        $teamModel = config('laravelstream.models.team')::findOrFail($team);
+        $teamModel = config('TeamStream.models.team')::findOrFail($team);
 
         $this->authorize('delete', $teamModel);
 
@@ -76,9 +76,9 @@ class TeamController extends Controller
 
     public function addMember(Request $request, mixed $team, InvitesTeamMembers $inviter): RedirectResponse
     {
-        $teamModel = config('laravelstream.models.team')::findOrFail($team);
+        $teamModel = config('TeamStream.models.team')::findOrFail($team);
 
-        if (LaravelStream::hasTeamInvitations()) {
+        if (TeamStream::hasTeamInvitations()) {
             app(InvitesTeamMembers::class)->invite($request->user(), $teamModel, $request->email, $request->role);
         } else {
             app(AddsTeamMembers::class)->add($request->user(), $teamModel, $request->email, $request->role);
@@ -89,8 +89,8 @@ class TeamController extends Controller
 
     public function removeMember(Request $request, mixed $team, mixed $user): RedirectResponse
     {
-        $teamModel = config('laravelstream.models.team')::findOrFail($team);
-        $member = config('laravelstream.models.user')::findOrFail($user);
+        $teamModel = config('TeamStream.models.team')::findOrFail($team);
+        $member = config('TeamStream.models.user')::findOrFail($user);
 
         app(RemovesTeamMembers::class)->remove($request->user(), $teamModel, $member);
 
@@ -99,7 +99,7 @@ class TeamController extends Controller
 
     public function switchTeam(Request $request, mixed $team): RedirectResponse
     {
-        $teamModel = config('laravelstream.models.team')::findOrFail($team);
+        $teamModel = config('TeamStream.models.team')::findOrFail($team);
 
         if (! $request->user()->switchTeam($teamModel)) {
             abort(403);
@@ -110,7 +110,7 @@ class TeamController extends Controller
 
     public function cancelInvitation(Request $request, mixed $invitationId): RedirectResponse
     {
-        $invitation = config('laravelstream.models.team_invitation')::findOrFail($invitationId);
+        $invitation = config('TeamStream.models.team_invitation')::findOrFail($invitationId);
 
         $this->authorize('removeTeamMember', $invitation->team);
 
@@ -121,7 +121,7 @@ class TeamController extends Controller
 
     public function acceptInvitation(Request $request, string $token): RedirectResponse
     {
-        $invitation = config('laravelstream.models.team_invitation')::where('token', $token)->firstOrFail();
+        $invitation = config('TeamStream.models.team_invitation')::where('token', $token)->firstOrFail();
 
         app(AddsTeamMembers::class)->add(
             $invitation->team->owner,
